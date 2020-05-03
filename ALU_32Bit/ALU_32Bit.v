@@ -8,8 +8,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module ALU_32Bit(
-		output reg [31:0] Out,
-		input [31:0] A,B,
+		output reg [8:0] Out,
+		input [8:0] A,B,
 		input [3:0] Opcode
 	);
 	
@@ -20,7 +20,7 @@ module ALU_32Bit(
 		
 			4'b0000 : // state 0000 : Out <= 0
 			begin
-				Out <= 32'b0;
+				Out <= 8'b0;
 			end 
 			
 			4'b0001: // state 0001 : Out <= A
@@ -85,10 +85,8 @@ module ALU_32Bit(
 			
 			4'b1110 : // state 1110 : Out <= Byte Swap
 			begin
-				Out <= {{A[7:0]},
-						  {A[15:8]},
-						  {A[23:16]},
-						  {A[31:24]}
+				Out <= {{A[3:0]},
+						  {A[7:4]}
 						  };
 			end
 			
@@ -97,7 +95,7 @@ module ALU_32Bit(
 				Out <= ^A;
 			end
 			
-			default : Out <= 32'bx;
+			default : Out <= 8'bx;
 		endcase
 	end
 endmodule
